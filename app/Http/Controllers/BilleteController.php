@@ -28,15 +28,6 @@ class BilleteController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-/*     public function store(Request $request)
-    {
-        Billete::create(
-            [
-                'user_id'=>$request->user_id,
-                'vuelo_id'=>$request->vuelo_id,
-            ]);
-        return redirect()->route('billetes.index');
-    } */
 
     public function store(Request $request)
     {
@@ -47,6 +38,7 @@ class BilleteController extends Controller
     $billete = new Billete();
     $billete->vuelo_id = $vuelo->id;
     $billete->user_id = User::where('name', $request->name)->first()->id;
+
     // Asignar otros datos del billete si es necesario
     $billete->save();
 

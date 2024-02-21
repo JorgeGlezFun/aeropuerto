@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BilleteController;
+use App\Http\Controllers\VueloController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,3 +28,4 @@ Route::view('profile', 'profile')
 require __DIR__.'/auth.php';
 
 Route::resource('billetes', BilleteController::class);
+Route::resource('vuelos', VueloController::class);
