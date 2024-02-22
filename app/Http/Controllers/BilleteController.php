@@ -31,13 +31,10 @@ class BilleteController extends Controller
 
     public function store(Request $request)
     {
-    // Buscar el vuelo por su código
-    $vuelo = Vuelo::where('codigo', $request->codigo_vuelo)->first();
-
     // Crear un nuevo billete
     $billete = new Billete();
-    $billete->vuelo_id = $vuelo->id;
     $billete->user_id = User::where('name', $request->name)->first()->id;
+    $billete->vuelo_id = Vuelo::where('codigo', $request->codigo)->first()->id;
 
     // Asignar otros datos del billete si es necesario
     $billete->save();

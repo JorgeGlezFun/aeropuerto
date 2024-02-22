@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Aeropuerto;
+use App\Models\Compania;
 use App\Models\Vuelo;
 use Illuminate\Http\Request;
 
@@ -28,18 +31,19 @@ class VueloController extends Controller
 
     public function store(Request $request)
     {
-        Vuelo::create(
-            [
-                "codigo"=>$request->codigo,
-                "compania_id"=>$request->compania_id,
-                "n_asientos"=>$request->n_asientos,
-                "precio"=>$request->precio,
-                "aeropuerto_llegada_id"=>$request->aeropuerto_llegada_id,
-                "aeropuerto_salida_id"=>$request->aeropuerto_salida_id,
-                "fecha_salida"=>$request->fecha_salida,
-                "fecha_llegada"=>$request->fecha_llegada
-            ]
-        );
+        $vuelo = new Vuelo();
+        $vuelo->codigo = $request->codigo;
+        $vuelo->compania_id = Compania::where('nombre', $request->compania)->first()->id;
+        $vuelo->n_asientos = $request->n_asientos;
+        $vuelo->precio = $request->precio;
+        $vuelo->aeropuerto_llegada_id = Aeropuerto::where('nombre', $request->aeropuerto_llegada)->first()->id;
+        $vuelo->aeropuerto_salida_id = Aeropuerto::where('nombre', $request->aeropuerto_salida)->first()->id;
+        $vuelo->fecha_llegada = $request->fecha_llegada;
+        $vuelo->fecha_salida = $request->fecha_salida;
+
+        $vuelo->save();
+
+
         session()->flash('success', 'El vuelo se ha creado correctamente.');
         return redirect()->route('vuelos.index');
     }
